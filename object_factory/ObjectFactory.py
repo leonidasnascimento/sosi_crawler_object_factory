@@ -1,6 +1,7 @@
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from object_factory.domain.Dependecy import Dependency
 from typing import Generic, TypeVar
+from abc import ABC
 
 InterfaceType = TypeVar('InterfaceType')
 ConcreteClassType = TypeVar('ConcreteClassType')
@@ -32,15 +33,19 @@ class ObjectFactory(IObjectFactory):
         :type targetCrawler: str
         """
 
-        if not issubclass(concreteClass, interface):
-            raise TypeError(type(concreteClass).__name__ + " not subclass of " + type(interface).__name__)
+        if not issubclass(interface, ABC):
+            raise TypeError(type(interface).__name__ + " not subclass of " + type(ABC).__name__)
 
-        dep: Dependency = Dependency(interface, targetCrawler, concreteClass) 
+        if not isinstance(concreteClass, interface):
+            raise TypeError(type(concreteClass).__name__ + " not an instance of " + type(interface).__name__)
+        
+        depCheck: [Dependency] = self.__findItem(targetCrawler, interface)
 
-        if self.dependecies.index(dep) > -1:
+        if depCheck is not None:
             raise ValueError("Dependecy already set")
-
-        self.dependecies.append(dep)
+        else:
+            dep: Dependency = Dependency(interface, targetCrawler, concreteClass)
+            self.dependecies.append(dep)
         pass
 
     def LoadPredefinedDependencies(self):
@@ -58,4 +63,25 @@ class ObjectFactory(IObjectFactory):
         :type interface: Generic[InterfaceType]
         :type targetCrawler: str
         """ 
+    
+    def __findItem(self, targetCrawler: str, interface: Generic[InterfaceType]) -> Dependency:
+        """
+        Finds an item whithin the list
+
+        :param targetCrawler: Crawler
+        :param interface: Interface
+        :type targetCrawler: str
+        :param interface: Generic[InterfaceType]
+        :return: [Dependency]
+        """
+        dep: Dependency = None
+
+        if self.dependecies is not None:
+            for dep in self.dependecies:
+                if dep.Crawler.lower() == targetCrawler.lower() and issubclass(dep.Interface, interface):
+                    return dep
+                pass
+            pass
+
+        return None
     pass
