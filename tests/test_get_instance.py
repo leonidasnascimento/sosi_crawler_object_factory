@@ -22,7 +22,17 @@ class test_get_instance(unittest.TestCase):
         pass
 
     def test_should_get_instance_from_loaded_predefined_dependency(self):
-        self.assertTrue(True)
+        try:
+            factory: IObjectFactory = ObjectFactory()
+            factory.LoadDependencies("tests/dependencies.json")
+
+            repoFromGetInstance = factory.GetInstance("test", IDataRepository)
+
+            self.assertTrue(isinstance(repoFromGetInstance, unittest.mock.MagicMock))
+            pass
+        except Exception as e:
+            self.assertTrue(False, str(e))
+            pass        
         pass
 
     def test_should_not_get_instance_from_unknown_dependency(self):

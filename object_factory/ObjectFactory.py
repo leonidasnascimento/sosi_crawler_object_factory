@@ -69,8 +69,8 @@ class ObjectFactory(IObjectFactory):
                 return
 
             for dep in preDefDependencies:
-                interface = importlib.import_module(dep["interface"])
-                implementation = importlib.import_module(dep["implementation"])
+                interface = importlib.import_module(dep["interface_pkg"]).__class__(dep["interface"])
+                implementation = importlib.import_module(dep["implementation_pkg"]).__class__(dep["implementation"])
                 crawler = dep["crawler"]
 
                 self.AddDependency(crawler, interface, implementation)
