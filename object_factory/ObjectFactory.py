@@ -3,6 +3,9 @@ from object_factory.domain.Dependecy import Dependency
 from typing import Generic, TypeVar
 from abc import ABC
 
+import importlib
+import json
+
 InterfaceType = TypeVar('InterfaceType')
 ConcreteClassType = TypeVar('ConcreteClassType')
 
@@ -48,10 +51,31 @@ class ObjectFactory(IObjectFactory):
             self.dependecies.append(dep)
         pass
 
-    def LoadPredefinedDependencies(self):
+    def LoadDependencies(self, filePath: str):
         """
         Load the dependencies that were predefined for SoSI's crawlers
+
+        :param filePath: The pre defined dependencies file path
+        :type filePath: str
         """
+
+        if filePath is None or filePath == "":
+            return
+
+        with open(filePath) as jsonFile:
+            preDefDependencies = json.load(jsonFile)
+
+            if(preDefDependencies is None):
+                return
+
+            for dep in preDefDependencies:
+                interface = importlib.import_module(dep["interface"])
+                implementation = importlib.import_module(dep["implementation"])
+                crawler = dep["crawler"]
+
+                self.AddDependency(crawler, interface, implementation)
+                pass
+            pass
         pass
 
     def GetInstance(self, targetCrawler: str, interface: Generic[InterfaceType]) -> InterfaceType:
@@ -62,7 +86,14 @@ class ObjectFactory(IObjectFactory):
         :param targetCrawler: Target crawler alias. It'll help the Object Factory to find the concrete class to inject
         :type interface: Generic[InterfaceType]
         :type targetCrawler: str
-        """ 
+        """
+        dependency: Dependency = self.__findItem(targetCrawler, interface)
+
+        if dependency is not None:
+            return dependency.Implementation()
+        else:
+            return None
+        pass
     
     def __findItem(self, targetCrawler: str, interface: Generic[InterfaceType]) -> Dependency:
         """

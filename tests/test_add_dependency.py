@@ -52,6 +52,34 @@ class test_add_dependency(unittest.TestCase):
             self.assertTrue(False, str(e))
             pass        
         pass
+
+    def test_should_not_add_interface_not_subclass_abc(self):
+        try:
+            factory: IObjectFactory = ObjectFactory()
+
+            factory.AddDependency("test_should_not_add_interface_not_subclass_abc", unittest.mock.MagicMock, unittest.mock.MagicMock)
+
+            self.assertTrue(False)
+            pass
+        except Exception as e:
+            self.assertRaises(TypeError)
+            self.assertTrue(str(e).lower().__contains__("not subclass of"))
+            pass     
+        pass
+
+    def test_should_not_add_dependency_isnt_instance_interface(self):
+        try:
+            factory: IObjectFactory = ObjectFactory()
+
+            factory.AddDependency("test_should_not_add_dependency_isnt_instance_interface", ILogging, unittest.mock.MagicMock)
+
+            self.assertTrue(False)
+            pass
+        except Exception as e:
+            self.assertRaises(TypeError)
+            self.assertTrue(str(e).lower().__contains__("not an instance of"))
+            pass     
+        pass
     pass
 
 if __name__ == '__main__':
