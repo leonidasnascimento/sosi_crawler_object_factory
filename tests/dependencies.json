@@ -1,9 +1,7 @@
 [
     {
-        "interface_pkg": "sosi_crawler_interfaces.IDataRepository",
-        "interface": "IDataRepository",
-        "implementation_pkg": "unittest.mock",
-        "implementation": "MagicMock",
+        "interface": "sosi_crawler_interfaces.ILogging",
+        "implementation": "child_class_logging.ChildClassILogging",
         "crawler": "test"
     }
 ]

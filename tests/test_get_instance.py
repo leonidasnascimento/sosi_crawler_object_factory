@@ -3,18 +3,22 @@ from unittest.mock import patch
 
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
+from sosi_crawler_interfaces.ILogging import ILogging
 from object_factory.ObjectFactory import ObjectFactory
 
 class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_added_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            repo: IDataRepository = unittest.mock.MagicMock(spec=IDataRepository)
+            
+            patcher = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
+            with patcher:
+                patcher.is_local = True
+                
+                factory.AddDependency("test_should_get_instance_from_added_dependency", IDataRepository, unittest.mock.MagicMock)
+                repoFromGetInstance = factory.GetInstance("test_should_get_instance_from_added_dependency", IDataRepository)
 
-            factory.AddDependency("test_should_get_instance_from_added_dependency", IDataRepository, repo)
-            repoFromGetInstance = factory.GetInstance("test_should_get_instance_from_added_dependency", IDataRepository)
-
-            self.assertTrue(isinstance(repoFromGetInstance, unittest.mock.MagicMock))
+                self.assertTrue(isinstance(repoFromGetInstance, IDataRepository))
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
@@ -26,9 +30,10 @@ class test_get_instance(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             factory.LoadDependencies("tests/dependencies.json")
 
-            repoFromGetInstance = factory.GetInstance("test", IDataRepository)
+            repoFromGetInstance: ILogging = factory.GetInstance("test", ILogging)
+            self.assertTrue(isinstance(repoFromGetInstance, ILogging))
 
-            self.assertTrue(isinstance(repoFromGetInstance, unittest.mock.MagicMock))
+            repoFromGetInstance.Log("Hello World!")
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
