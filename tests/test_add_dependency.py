@@ -10,9 +10,12 @@ class test_add_dependency(unittest.TestCase):
     def test_should_add_dependency_with_sucess(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            repo: IDataRepository = unittest.mock.MagicMock(spec=IDataRepository)
+            patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
+            
+            with patcher:
+                patcher.is_local = True
 
-            factory.AddDependency("test_should_add_dependency_with_sucess", IDataRepository, repo)
+                factory.AddDependency("test_should_add_dependency_with_sucess", IDataRepository, unittest.mock.MagicMock)
             
             self.assertTrue(True)
             pass
@@ -24,10 +27,13 @@ class test_add_dependency(unittest.TestCase):
     def test_should_not_add_dependency_error_duplicate(self):
         try:
             factory: IObjectFactory = ObjectFactory()            
-            repo: IDataRepository = unittest.mock.MagicMock(spec=IDataRepository)
+            patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
+            
+            with patcher:
+                patcher.is_local = True
 
-            factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, repo)
-            factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, repo)
+                factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, unittest.mock.MagicMock)
 
             self.assertTrue(False)
             pass
@@ -40,11 +46,15 @@ class test_add_dependency(unittest.TestCase):
     def test_should_add_two_diff_dependencies_same_crawler(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            repo: IDataRepository = unittest.mock.MagicMock(spec=IDataRepository)
-            log: ILogging = unittest.mock.MagicMock(spec=ILogging)
+            patchRepo: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
+            patchLog: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (ILogging,))
+            
+            with patchRepo, patchLog:
+                patchRepo.is_local = True
+                patchLog.is_local = True
 
-            factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", IDataRepository, repo)
-            factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", ILogging, log)
+                factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", ILogging, unittest.mock.MagicMock)
 
             self.assertTrue(True)
             pass
@@ -77,7 +87,7 @@ class test_add_dependency(unittest.TestCase):
             pass
         except Exception as e:
             self.assertRaises(TypeError)
-            self.assertTrue(str(e).lower().__contains__("not an instance of"))
+            self.assertTrue(str(e).lower().__contains__("not subclass of"))
             pass     
         pass
     pass
