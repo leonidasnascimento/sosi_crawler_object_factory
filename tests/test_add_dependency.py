@@ -11,24 +11,24 @@ class test_add_dependency(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
             patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
-            
+
             with patcher:
                 patcher.is_local = True
 
                 factory.AddDependency("test_should_add_dependency_with_sucess", IDataRepository, unittest.mock.MagicMock)
-            
+
             self.assertTrue(True)
             pass
         except ValueError as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
 
     def test_should_not_add_dependency_error_duplicate(self):
         try:
-            factory: IObjectFactory = ObjectFactory()            
+            factory: IObjectFactory = ObjectFactory()
             patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
-            
+
             with patcher:
                 patcher.is_local = True
 
@@ -40,7 +40,7 @@ class test_add_dependency(unittest.TestCase):
         except Exception as e:
             self.assertRaises(ValueError)
             self.assertTrue(str(e).lower() == "dependecy already set")
-            pass        
+            pass
         pass
 
     def test_should_add_two_diff_dependencies_same_crawler(self):
@@ -48,7 +48,7 @@ class test_add_dependency(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             patchRepo: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
             patchLog: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (ILogging,))
-            
+
             with patchRepo, patchLog:
                 patchRepo.is_local = True
                 patchLog.is_local = True
@@ -60,7 +60,7 @@ class test_add_dependency(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
 
     def test_should_not_add_interface_not_subclass_abc(self):
@@ -74,7 +74,7 @@ class test_add_dependency(unittest.TestCase):
         except Exception as e:
             self.assertRaises(TypeError)
             self.assertTrue(str(e).lower().__contains__("not subclass of"))
-            pass     
+            pass
         pass
 
     def test_should_not_add_dependency_isnt_instance_interface(self):
@@ -88,7 +88,7 @@ class test_add_dependency(unittest.TestCase):
         except Exception as e:
             self.assertRaises(TypeError)
             self.assertTrue(str(e).lower().__contains__("not subclass of"))
-            pass     
+            pass
         pass
     pass
 

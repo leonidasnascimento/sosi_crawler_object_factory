@@ -13,7 +13,7 @@ class ChildClassILogging(ILogging):
     :type repository: IDataRepository
     """
 
-    def Log(self, message: str): 
+    def Log(self, message: str):
         """
         Performs log operation
 

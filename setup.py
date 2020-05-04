@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="sosi_crawler_interfaces", 
+    name="sosi_crawler_interfaces",
     version="0.1.1",
     author="SoSI",
     author_email="contato@sosi.com.br",

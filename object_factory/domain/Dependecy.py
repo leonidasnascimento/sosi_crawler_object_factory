@@ -7,11 +7,11 @@ class Dependency():
     """
     Domain class that represents a dependency configuration
     """
-    
+
     Interface: InterfaceType
     Crawler: str
     Implementation: ConcreteObjType
-    
+
     def __init__(self, interface: Generic[InterfaceType], crawler: str, implementation: Generic[ConcreteObjType]):
         """
         Class initializer
@@ -24,7 +24,7 @@ class Dependency():
         :type implementation: Generic[ConcreteObjType]
         :type crawler: str
         """
-        
+
         self.Interface = interface
         self.Crawler = crawler
         self.Implementation = implementation

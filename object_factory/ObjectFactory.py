@@ -11,7 +11,7 @@ ConcreteClassType = TypeVar('ConcreteClassType')
 
 class ObjectFactory(IObjectFactory):
     """
-    Concrete class for IObjectFactory interface. 
+    Concrete class for IObjectFactory interface.
     """
 
     dependecies: [Dependency]
@@ -42,7 +42,7 @@ class ObjectFactory(IObjectFactory):
 
         if not issubclass(concreteClass, interface):
             raise TypeError(isNotSublcassMsg.format(str(type(concreteClass)), str(type(interface))))
-        
+
         depCheck: [Dependency] = self.__findItem(targetCrawler, interface)
 
         if depCheck is not None:
@@ -74,10 +74,10 @@ class ObjectFactory(IObjectFactory):
             for dep in preDefDependencies:
                 if "interface" not in dep:
                     raise AttributeError(attNotFoundMsg.format("interface"))
-                
+
                 if "implementation" not in dep:
                     raise AttributeError(attNotFoundMsg.format("implementation"))
-                
+
                 if "crawler" not in dep:
                     raise AttributeError(attNotFoundMsg.format("crawler"))
 
@@ -106,13 +106,13 @@ class ObjectFactory(IObjectFactory):
         else:
             return None
         pass
-    
+
     def __import(self, package):
         components = package.split('.')
         mod = __import__(components[0])
         for comp in components[1:]:
             mod = getattr(mod, comp)
-        
+
         return mod
 
     def __findItem(self, targetCrawler: str, interface: Generic[InterfaceType]) -> Dependency:

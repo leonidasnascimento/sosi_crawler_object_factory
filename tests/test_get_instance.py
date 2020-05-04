@@ -11,10 +11,10 @@ class test_get_instance(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
             patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
-            
+
             with patcher:
                 patcher.is_local = True
-                
+
                 factory.AddDependency("test_should_get_instance_from_added_dependency", IDataRepository, unittest.mock.MagicMock)
                 repoFromGetInstance = factory.GetInstance("test_should_get_instance_from_added_dependency", IDataRepository)
 
@@ -22,7 +22,7 @@ class test_get_instance(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
 
     def test_should_get_instance_from_loaded_predefined_dependency(self):
@@ -37,14 +37,14 @@ class test_get_instance(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
 
     def test_should_not_get_instance_from_unknown_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
             patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
-            
+
             with patcher:
                 patcher.is_local = True
 
@@ -55,7 +55,7 @@ class test_get_instance(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
     pass
 

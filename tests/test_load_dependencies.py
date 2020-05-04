@@ -13,10 +13,10 @@ class test_load_dependencies(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
-    
-    def test_should_not_load_from_empty_param(self):
+
+    def test_should_not_load_from_empty_json_file_param(self):
         try:
             factory: IObjectFactory = ObjectFactory()
             factory.LoadDependencies("")
@@ -26,27 +26,57 @@ class test_load_dependencies(unittest.TestCase):
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
-            pass        
+            pass
         pass
 
     def test_should_not_load_from_file_notfound(self):
         try:
             factory: IObjectFactory = ObjectFactory()
             factory.LoadDependencies("tests\\dependencies__.json")
-            
+
             self.assertTrue(False)
             pass
         except Exception:
             self.assertRaises(FileNotFoundError)
-            pass        
+            pass
         pass
-    
-    def test_should_not_load_param_interface_missing(self):        
+
+    def test_should_not_load_param_interface_missing(self):
+        try:
+            factory: IObjectFactory = ObjectFactory()
+            factory.LoadDependencies("tests\\dependencies_no_interface.json")
+
+            self.assertTrue(False)
+            pass
+        except Exception as e:
+            self.assertRaises(AttributeError)
+            self.assertTrue(str(e).__contains__("interface"))
+            pass
         pass
-    
-    def test_should_not_load_param_implementation_missing(self):        
+
+    def test_should_not_load_param_implementation_missing(self):
+        try:
+            factory: IObjectFactory = ObjectFactory()
+            factory.LoadDependencies("tests\\dependencies_no_implementation.json")
+
+            self.assertTrue(False)
+            pass
+        except Exception as e:
+            self.assertRaises(AttributeError)
+            self.assertTrue(str(e).__contains__("implementation"))
+            pass
         pass
-    
-    def test_should_not_load_param_crawler_missing(self):        
+
+    def test_should_not_load_param_crawler_missing(self):
+        try:
+            factory: IObjectFactory = ObjectFactory()
+            factory.LoadDependencies("tests\\dependencies_no_crawler.json")
+
+            self.assertTrue(False)
+            pass
+        except Exception as e:
+            self.assertRaises(AttributeError)
+            self.assertTrue(str(e).__contains__("crawler"))
+            pass
         pass
     pass
