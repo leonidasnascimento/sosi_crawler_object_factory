@@ -65,7 +65,7 @@ requests==2.22.0
 requests-toolbelt==0.9.1
 rsa==4.0
 six==1.12.0
-sosi-crawler-interfaces==0.1.3
+sosi-crawler-interfaces==0.1.3 -i https://pkgs.dev.azure.com/leonidasnascimento/_packaging/SoSI/pypi/upload
 soupsieve==1.9.3
 toml==0.10.0
 tqdm==4.44.1
