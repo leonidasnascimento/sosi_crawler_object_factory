@@ -1,4 +1,4 @@
---extra-index https://pkgs.dev.azure.com/leonidasnascimento/_packaging/SoSI/pypi/upload
+--extra-index-url https://pkgs.dev.azure.com/leonidasnascimento/_packaging/SoSI/pypi/simple/
 
 appdirs==1.4.3
 artifacts-keyring==0.2.9
