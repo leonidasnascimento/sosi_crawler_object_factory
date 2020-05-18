@@ -1,10 +1,14 @@
-from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
-from object_factory.domain.Dependecy import Dependency
+"""
+    Module responsible to implement IObjectFactory
+"""
+
 from typing import Generic, TypeVar
 from abc import ABC
 
-import importlib
 import json
+
+from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
+from object_factory.domain.Dependecy import Dependency
 
 InterfaceType = TypeVar('InterfaceType')
 ConcreteClassType = TypeVar('ConcreteClassType')
@@ -22,7 +26,6 @@ class ObjectFactory(IObjectFactory):
         """
 
         self.dependecies = []
-        pass
 
     def AddDependency(self, targetCrawler: str, interface: Generic[InterfaceType], concreteClass: Generic[ConcreteClassType]):
         """
@@ -35,22 +38,21 @@ class ObjectFactory(IObjectFactory):
         :type interface: Generic[InterfaceType]
         :type targetCrawler: str
         """
-        isNotSublcassMsg = "'{0}' not subclass of '{1}'"
+        is_not_sublcass_msg = "'{0}' not subclass of '{1}'"
 
         if not issubclass(interface, ABC):
-            raise TypeError(isNotSublcassMsg.format(str(type(interface)), str(type(ABC))))
+            raise TypeError(is_not_sublcass_msg.format(str(type(interface)), str(type(ABC))))
 
         if not issubclass(concreteClass, interface):
-            raise TypeError(isNotSublcassMsg.format(str(type(concreteClass)), str(type(interface))))
+            raise TypeError(is_not_sublcass_msg.format(str(type(concreteClass)), str(type(interface))))
 
-        depCheck: [Dependency] = self.__findItem(targetCrawler, interface)
+        dep_check: [Dependency] = self.__find_item(targetCrawler, interface)
 
-        if depCheck is not None:
+        if dep_check is not None:
             raise ValueError("Dependecy already set")
-        else:
-            dep: Dependency = Dependency(interface, targetCrawler, concreteClass)
-            self.dependecies.append(dep)
-        pass
+
+        dep: Dependency = Dependency(interface, targetCrawler, concreteClass)
+        self.dependecies.append(dep)
 
     def LoadDependencies(self, filePath: str):
         """
@@ -60,35 +62,32 @@ class ObjectFactory(IObjectFactory):
         :type filePath: str
         """
 
-        attNotFoundMsg = "'{0}' attribute not found inside JSON file"
+        att_not_found_msg = "'{0}' attribute not found inside JSON file"
 
         if filePath is None or filePath == "":
             return
 
-        with open(filePath) as jsonFile:
-            preDefDependencies = json.load(jsonFile)
+        with open(filePath) as json_file:
+            pre_def_dependencies = json.load(json_file)
 
-            if(preDefDependencies is None):
+            if pre_def_dependencies is None:
                 return
 
-            for dep in preDefDependencies:
+            for dep in pre_def_dependencies:
                 if "interface" not in dep:
-                    raise AttributeError(attNotFoundMsg.format("interface"))
+                    raise AttributeError(att_not_found_msg.format("interface"))
 
                 if "implementation" not in dep:
-                    raise AttributeError(attNotFoundMsg.format("implementation"))
+                    raise AttributeError(att_not_found_msg.format("implementation"))
 
                 if "crawler" not in dep:
-                    raise AttributeError(attNotFoundMsg.format("crawler"))
+                    raise AttributeError(att_not_found_msg.format("crawler"))
 
                 interface = self.__import(dep["interface"])
                 implementation = self.__import(dep["implementation"])
                 crawler = dep["crawler"]
 
                 self.AddDependency(crawler, interface, implementation)
-                pass
-            pass
-        pass
 
     def GetInstance(self, targetCrawler: str, interface: Generic[InterfaceType]) -> InterfaceType:
         """
@@ -99,13 +98,12 @@ class ObjectFactory(IObjectFactory):
         :type interface: Generic[InterfaceType]
         :type targetCrawler: str
         """
-        dependency: Dependency = self.__findItem(targetCrawler, interface)
+        dependency: Dependency = self.__find_item(targetCrawler, interface)
 
         if dependency is not None:
             return dependency.Implementation()
-        else:
-            return None
-        pass
+
+        return None
 
     def __import(self, package):
         components = package.split('.')
@@ -115,13 +113,13 @@ class ObjectFactory(IObjectFactory):
 
         return mod
 
-    def __findItem(self, targetCrawler: str, interface: Generic[InterfaceType]) -> Dependency:
+    def __find_item(self, target_crawler: str, interface: Generic[InterfaceType]) -> Dependency:
         """
         Finds an item whithin the list
 
-        :param targetCrawler: Crawler
+        :param target_crawler: Crawler
         :param interface: Interface
-        :type targetCrawler: str
+        :type target_crawler: str
         :param interface: Generic[InterfaceType]
         :return: [Dependency]
         """
@@ -129,10 +127,7 @@ class ObjectFactory(IObjectFactory):
 
         if self.dependecies is not None:
             for dep in self.dependecies:
-                if dep.Crawler.lower() == targetCrawler.lower() and issubclass(dep.Interface, interface):
+                if dep.Crawler.lower() == target_crawler.lower() and issubclass(dep.Interface, interface):
                     return dep
-                pass
-            pass
 
         return None
-    pass

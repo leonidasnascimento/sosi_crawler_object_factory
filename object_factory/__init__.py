@@ -1,1 +1,5 @@
-from object_factory.ObjectFactory import ObjectFactory
+"""
+    Init
+"""
+
+from object_factory.factory import ObjectFactory

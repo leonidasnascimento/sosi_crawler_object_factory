@@ -28,5 +28,3 @@ class Dependency():
         self.Interface = interface
         self.Crawler = crawler
         self.Implementation = implementation
-        pass
-    pass
