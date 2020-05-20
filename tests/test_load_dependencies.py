@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.ILogging import ILogging
-from object_factory.ObjectFactory import ObjectFactory
+from object_factory.factory import ObjectFactory
 
 class test_load_dependencies(unittest.TestCase):
     def test_should_load_from_file_sucessfully(self):

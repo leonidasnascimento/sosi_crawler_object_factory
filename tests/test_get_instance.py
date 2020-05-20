@@ -4,7 +4,7 @@ from unittest.mock import patch
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
 from sosi_crawler_interfaces.ILogging import ILogging
-from object_factory.ObjectFactory import ObjectFactory
+from object_factory.factory import ObjectFactory
 
 class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_added_dependency(self):
