@@ -15,8 +15,8 @@ class test_get_instance(unittest.TestCase):
             with patcher:
                 patcher.is_local = True
 
-                factory.AddDependency("test_should_get_instance_from_added_dependency", IDataRepository, unittest.mock.MagicMock)
-                repoFromGetInstance = factory.GetInstance("test_should_get_instance_from_added_dependency", IDataRepository)
+                factory.AddDependency('test_should_get_instance_from_added_dependency', IDataRepository, unittest.mock.MagicMock)
+                repoFromGetInstance = factory.GetInstance('test_should_get_instance_from_added_dependency', IDataRepository)
 
                 self.assertTrue(isinstance(repoFromGetInstance, IDataRepository))
             pass
@@ -28,12 +28,12 @@ class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_loaded_predefined_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies("tests/dependencies.json")
+            factory.LoadDependencies('tests/dependencies.json')
 
-            repoFromGetInstance: ILogging = factory.GetInstance("test", ILogging)
+            repoFromGetInstance: ILogging = factory.GetInstance('test', ILogging)
             self.assertTrue(isinstance(repoFromGetInstance, ILogging))
 
-            repoFromGetInstance.Log("Hello World!")
+            repoFromGetInstance.Log('Hello World!')
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
@@ -48,8 +48,8 @@ class test_get_instance(unittest.TestCase):
             with patcher:
                 patcher.is_local = True
 
-                factory.AddDependency("test_should_get_instance_from_added_dependency", IDataRepository, unittest.mock.MagicMock)
-                repoFromGetInstance = factory.GetInstance("test", IDataRepository)
+                factory.AddDependency('test_should_get_instance_from_added_dependency', IDataRepository, unittest.mock.MagicMock)
+                repoFromGetInstance = factory.GetInstance('test', IDataRepository)
 
             self.assertTrue(repoFromGetInstance is None)
             pass

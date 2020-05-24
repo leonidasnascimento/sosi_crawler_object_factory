@@ -15,7 +15,7 @@ class test_add_dependency(unittest.TestCase):
             with patcher:
                 patcher.is_local = True
 
-                factory.AddDependency("test_should_add_dependency_with_sucess", IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency('test_should_add_dependency_with_sucess', IDataRepository, unittest.mock.MagicMock)
 
             self.assertTrue(True)
             pass
@@ -32,14 +32,14 @@ class test_add_dependency(unittest.TestCase):
             with patcher:
                 patcher.is_local = True
 
-                factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, unittest.mock.MagicMock)
-                factory.AddDependency("test_should_not_add_dependency_error_duplicate", IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency('test_should_not_add_dependency_error_duplicate', IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency('test_should_not_add_dependency_error_duplicate', IDataRepository, unittest.mock.MagicMock)
 
             self.assertTrue(False)
             pass
         except Exception as e:
             self.assertRaises(ValueError)
-            self.assertTrue(str(e).lower() == "dependecy already set")
+            self.assertTrue(str(e).lower() == 'dependecy already set')
             pass
         pass
 
@@ -53,8 +53,8 @@ class test_add_dependency(unittest.TestCase):
                 patchRepo.is_local = True
                 patchLog.is_local = True
 
-                factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", IDataRepository, unittest.mock.MagicMock)
-                factory.AddDependency("test_should_add_two_diff_dependencies_same_crawler", ILogging, unittest.mock.MagicMock)
+                factory.AddDependency('test_should_add_two_diff_dependencies_same_crawler', IDataRepository, unittest.mock.MagicMock)
+                factory.AddDependency('test_should_add_two_diff_dependencies_same_crawler', ILogging, unittest.mock.MagicMock)
 
             self.assertTrue(True)
             pass
@@ -67,13 +67,13 @@ class test_add_dependency(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
 
-            factory.AddDependency("test_should_not_add_interface_not_subclass_abc", unittest.mock.MagicMock, unittest.mock.MagicMock)
+            factory.AddDependency('test_should_not_add_interface_not_subclass_abc', unittest.mock.MagicMock, unittest.mock.MagicMock)
 
             self.assertTrue(False)
             pass
         except Exception as e:
             self.assertRaises(TypeError)
-            self.assertTrue(str(e).lower().__contains__("not subclass of"))
+            self.assertTrue(str(e).lower().__contains__('not subclass of'))
             pass
         pass
 
@@ -81,13 +81,13 @@ class test_add_dependency(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
 
-            factory.AddDependency("test_should_not_add_dependency_isnt_instance_interface", ILogging, unittest.mock.MagicMock)
+            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, unittest.mock.MagicMock)
 
             self.assertTrue(False)
             pass
         except Exception as e:
             self.assertRaises(TypeError)
-            self.assertTrue(str(e).lower().__contains__("not subclass of"))
+            self.assertTrue(str(e).lower().__contains__('not subclass of'))
             pass
         pass
     pass

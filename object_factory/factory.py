@@ -49,7 +49,7 @@ class ObjectFactory(IObjectFactory):
         dep_check: [Dependency] = self.__find_item(targetCrawler, interface)
 
         if dep_check is not None:
-            raise ValueError("Dependecy already set")
+            raise ValueError('Dependecy already set')
 
         dep: Dependency = Dependency(interface, targetCrawler, concreteClass)
         self.dependecies.append(dep)
@@ -64,7 +64,7 @@ class ObjectFactory(IObjectFactory):
 
         att_not_found_msg = "'{0}' attribute not found inside JSON file"
 
-        if filePath is None or filePath == "":
+        if filePath is None or filePath == '':
             return
 
         with open(filePath) as json_file:
@@ -74,18 +74,18 @@ class ObjectFactory(IObjectFactory):
                 return
 
             for dep in pre_def_dependencies:
-                if "interface" not in dep:
-                    raise AttributeError(att_not_found_msg.format("interface"))
+                if 'interface' not in dep:
+                    raise AttributeError(att_not_found_msg.format('interface'))
 
-                if "implementation" not in dep:
-                    raise AttributeError(att_not_found_msg.format("implementation"))
+                if 'implementation' not in dep:
+                    raise AttributeError(att_not_found_msg.format('implementation'))
 
-                if "crawler" not in dep:
-                    raise AttributeError(att_not_found_msg.format("crawler"))
+                if 'crawler' not in dep:
+                    raise AttributeError(att_not_found_msg.format('crawler'))
 
-                interface = self.__import(dep["interface"])
-                implementation = self.__import(dep["implementation"])
-                crawler = dep["crawler"]
+                interface = self.__import(dep['interface'])
+                implementation = self.__import(dep['implementation'])
+                crawler = dep['crawler']
 
                 self.AddDependency(crawler, interface, implementation)
 
