@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-
+from unit_tests.child_class_logging import ChildClassNotAbc
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
 from sosi_crawler_interfaces.ILogging import ILogging
@@ -66,8 +66,7 @@ class test_add_dependency(unittest.TestCase):
     def test_should_not_add_interface_not_subclass_abc(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-
-            factory.AddDependency('test_should_not_add_interface_not_subclass_abc', unittest.mock.MagicMock, unittest.mock.MagicMock)
+            factory.AddDependency('test_should_not_add_interface_not_subclass_abc', ChildClassNotAbc, unittest.mock.MagicMock)
 
             self.assertTrue(False)
             pass
@@ -81,10 +80,9 @@ class test_add_dependency(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
 
-            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, unittest.mock.MagicMock)
+            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, factory)
 
             self.assertTrue(False)
-            pass
         except Exception as e:
             self.assertRaises(TypeError)
             self.assertTrue(str(e).lower().__contains__('not subclass of'))
