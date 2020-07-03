@@ -9,7 +9,7 @@ class test_load_dependencies(unittest.TestCase):
     def test_should_load_from_file_sucessfully(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('unit_tests\\dependencies.json')
+            factory.LoadDependencies('tests\\dependencies.json')
             pass
         except Exception as e:
             self.assertTrue(False, str(e))
@@ -32,7 +32,7 @@ class test_load_dependencies(unittest.TestCase):
     def test_should_not_load_from_file_notfound(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('unit_tests\\dependencies__.json')
+            factory.LoadDependencies('tests\\dependencies__.json')
 
             self.assertTrue(False)
             pass
@@ -44,7 +44,7 @@ class test_load_dependencies(unittest.TestCase):
     def test_should_not_load_param_interface_missing(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('unit_tests\\dependencies_no_interface.json')
+            factory.LoadDependencies('tests\\dependencies_no_interface.json')
 
             self.assertTrue(False)
             pass
@@ -57,7 +57,7 @@ class test_load_dependencies(unittest.TestCase):
     def test_should_not_load_param_implementation_missing(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('unit_tests\\dependencies_no_implementation.json')
+            factory.LoadDependencies('tests\\dependencies_no_implementation.json')
 
             self.assertTrue(False)
             pass
@@ -70,7 +70,7 @@ class test_load_dependencies(unittest.TestCase):
     def test_should_not_load_param_crawler_missing(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('unit_tests\\dependencies_no_crawler.json')
+            factory.LoadDependencies('tests\\dependencies_no_crawler.json')
 
             self.assertTrue(False)
             pass

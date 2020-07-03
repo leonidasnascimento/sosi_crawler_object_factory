@@ -1,6 +1,6 @@
 [
     {
         "interface": "sosi_crawler_interfaces.ILogging",
-        "implementation": "child_class_logging.ChildClassILogging"
+        "implementation": "tests.child_class_logging.ChildClassILogging"
     }
 ]

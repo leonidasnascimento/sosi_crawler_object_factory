@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from unit_tests.child_class_logging import ChildClassNotAbc
+from tests.child_class_logging import ChildClassNotAbc
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
 from sosi_crawler_interfaces.ILogging import ILogging
