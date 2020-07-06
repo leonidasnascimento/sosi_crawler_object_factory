@@ -31,7 +31,7 @@ class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_loaded_predefined_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies(FILE_PATH + '\\dependencies.json')
+            factory.LoadDependencies(FILE_PATH + '/dependencies.json')
 
             repoFromGetInstance: ILogging = factory.GetInstance('test', ILogging)
             self.assertTrue(isinstance(repoFromGetInstance, ILogging))
