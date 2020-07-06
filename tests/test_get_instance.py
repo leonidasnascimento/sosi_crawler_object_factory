@@ -1,10 +1,13 @@
 import unittest
+import pathlib
 from unittest.mock import patch
 
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
 from sosi_crawler_interfaces.ILogging import ILogging
 from object_factory.factory import ObjectFactory
+
+FILE_PATH = pathlib.Path(__file__).parent.__str__()
 
 class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_added_dependency(self):
@@ -28,7 +31,7 @@ class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_loaded_predefined_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies('tests\\dependencies.json')
+            factory.LoadDependencies(FILE_PATH + '\\dependencies.json')
 
             repoFromGetInstance: ILogging = factory.GetInstance('test', ILogging)
             self.assertTrue(isinstance(repoFromGetInstance, ILogging))
