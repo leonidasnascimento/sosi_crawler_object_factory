@@ -37,13 +37,10 @@ class test_get_instance(unittest.TestCase):
     def test_should_not_get_instance_from_unknown_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            patcher: unittest.mock.patch = unittest.mock.patch.object(unittest.mock.MagicMock, '__bases__', (IDataRepository,))
+            log_class: ILogging = type('log_class', (ILogging,), {})
 
-            with patcher:
-                patcher.is_local = True
-
-                factory.AddDependency('test_should_get_instance_from_added_dependency', IDataRepository, unittest.mock.MagicMock)
-                repo_from_get_instance = factory.GetInstance('test', IDataRepository)
+            factory.AddDependency('test_should_add_dependency_with_sucess', ILogging, log_class)
+            repo_from_get_instance = factory.GetInstance('test', ILogging)
 
             self.assertTrue(repo_from_get_instance is None)
         except Exception as e:

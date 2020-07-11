@@ -60,8 +60,9 @@ class test_add_dependency(unittest.TestCase):
     def test_should_not_add_dependency_isnt_instance_interface(self):
         try:
             factory: IObjectFactory = ObjectFactory()
+            repo_class: IDataRepository = type('repo_class', (IDataRepository,), {})
 
-            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, factory)
+            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, repo_class)
 
             self.assertTrue(False)
         except Exception as e:
