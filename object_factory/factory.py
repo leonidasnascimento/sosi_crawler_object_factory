@@ -70,9 +70,6 @@ class ObjectFactory(IObjectFactory):
         with open(filePath) as json_file:
             pre_def_dependencies = json.load(json_file)
 
-            if pre_def_dependencies is None:
-                return
-
             for dep in pre_def_dependencies:
                 if 'interface' not in dep:
                     raise AttributeError(att_not_found_msg.format('interface'))
