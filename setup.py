@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='sosi_crawler_object_factory',
-    version='__version__',
+    version=__version__,
     author='SoSI',
     author_email='contato@sosi.com.br',
     description="Object facotry responsible to create SoSI's components objects (DIP)",
