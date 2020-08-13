@@ -1,0 +1,2 @@
+from sosi_crawler_object_factory.factory import ObjectFactory 
+from sosi_crawler_object_factory.dependecy import Dependency

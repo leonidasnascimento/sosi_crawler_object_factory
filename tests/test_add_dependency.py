@@ -6,7 +6,7 @@ from tests.child_class_logging import ChildClassNotAbc, ChildClassILogging
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
 from sosi_crawler_interfaces.IDataRepository import IDataRepository
 from sosi_crawler_interfaces.ILogging import ILogging
-from object_factory.factory import ObjectFactory
+from sosi_crawler_object_factory.factory import ObjectFactory
 
 FILE_PATH = pathlib.Path(__file__).parent.__str__()
 
