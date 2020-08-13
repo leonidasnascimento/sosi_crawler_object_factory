@@ -8,7 +8,7 @@ from abc import ABC
 import json
 
 from sosi_crawler_interfaces.IObjectFactory import IObjectFactory
-from object_factory.dependecy import Dependency
+from sosi_crawler_object_factory.dependecy import Dependency
 
 InterfaceType = TypeVar('InterfaceType')
 ConcreteClassType = TypeVar('ConcreteClassType')
