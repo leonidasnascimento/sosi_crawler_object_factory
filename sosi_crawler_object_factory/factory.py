@@ -2,7 +2,7 @@
     Module responsible to implement IObjectFactory
 """
 
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Optional
 from abc import ABC
 
 import json
@@ -110,7 +110,7 @@ class ObjectFactory(IObjectFactory):
 
         return mod
 
-    def __find_item(self, target_crawler: str, interface: Generic[InterfaceType]) -> Dependency:
+    def __find_item(self, target_crawler: str, interface: Generic[InterfaceType]) -> Optional[Dependency]:
         """
         Finds an item whithin the list
 
@@ -118,9 +118,9 @@ class ObjectFactory(IObjectFactory):
         :param interface: Interface
         :type target_crawler: str
         :param interface: Generic[InterfaceType]
-        :return: [Dependency]
+        :return: Optional[Dependency]
         """
-        dep: Dependency = None
+        dep: Optional[Dependency] = None
 
         if self.dependecies is not None:
             for dep in self.dependecies:
