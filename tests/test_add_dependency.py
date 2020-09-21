@@ -16,7 +16,7 @@ class test_add_dependency(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             log_class: ILogging = type('log_class', (ILogging,), {})
 
-            factory.AddDependency('test_should_add_dependency_with_sucess', ILogging, log_class)
+            factory.add_dependency('test_should_add_dependency_with_sucess', ILogging, log_class)
             self.assertTrue(True)
         except ValueError as e:
             self.assertTrue(False, str(e))
@@ -26,8 +26,8 @@ class test_add_dependency(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             log_class: ILogging = type('log_class', (ILogging,), {})
             
-            factory.AddDependency('test_should_not_add_dependency_error_duplicate', ILogging, log_class)
-            factory.AddDependency('test_should_not_add_dependency_error_duplicate', ILogging, log_class)
+            factory.add_dependency('test_should_not_add_dependency_error_duplicate', ILogging, log_class)
+            factory.add_dependency('test_should_not_add_dependency_error_duplicate', ILogging, log_class)
 
             self.assertTrue(False)
         except Exception as e:
@@ -40,8 +40,8 @@ class test_add_dependency(unittest.TestCase):
             repo_class: IDataRepository = type('repo_class', (IDataRepository,), {})
             log_class: ILogging = type('log_class', (ILogging,), {})
             
-            factory.AddDependency('test_should_add_two_diff_dependencies_same_crawler', IDataRepository, repo_class)
-            factory.AddDependency('test_should_add_two_diff_dependencies_same_crawler', ILogging, log_class)
+            factory.add_dependency('test_should_add_two_diff_dependencies_same_crawler', IDataRepository, repo_class)
+            factory.add_dependency('test_should_add_two_diff_dependencies_same_crawler', ILogging, log_class)
 
             self.assertTrue(True)
         except Exception as e:
@@ -50,7 +50,7 @@ class test_add_dependency(unittest.TestCase):
     def test_should_not_add_interface_not_subclass_abc(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.AddDependency('test_should_not_add_interface_not_subclass_abc', type("not_abc_base_class", (), {}), type("not_abc_class", (), {}))
+            factory.add_dependency('test_should_not_add_interface_not_subclass_abc', type("not_abc_base_class", (), {}), type("not_abc_class", (), {}))
 
             self.assertTrue(False)
         except Exception as e:
@@ -62,7 +62,7 @@ class test_add_dependency(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             repo_class: IDataRepository = type('repo_class', (IDataRepository,), {})
 
-            factory.AddDependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, repo_class)
+            factory.add_dependency('test_should_not_add_dependency_isnt_instance_interface', ILogging, repo_class)
 
             self.assertTrue(False)
         except Exception as e:

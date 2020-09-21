@@ -15,7 +15,7 @@ class ChildClassILogging(ILogging):
         '''
         pass
 
-    def SetRepository(self, repository: IDataRepository): raise NotImplementedError
+    def set_repository(self, repository: IDataRepository): raise NotImplementedError
     """
     Sets a repository in order to use within logging process
 
@@ -23,7 +23,7 @@ class ChildClassILogging(ILogging):
     :type repository: IDataRepository
     """
 
-    def Log(self, message: str):
+    def log(self, message: str):
         """
         Performs log operation
 

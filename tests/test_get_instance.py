@@ -14,9 +14,9 @@ class test_get_instance(unittest.TestCase):
         try:
             factory: IObjectFactory = ObjectFactory()
 
-            factory.AddDependency('test_should_get_instance_from_added_dependency', ILogging, ChildClassILogging)
+            factory.add_dependency('test_should_get_instance_from_added_dependency', ILogging, ChildClassILogging)
             
-            repo_from_get_instance = factory.GetInstance('test_should_get_instance_from_added_dependency', ILogging)
+            repo_from_get_instance = factory.get_instance('test_should_get_instance_from_added_dependency', ILogging)
 
             self.assertTrue(isinstance(repo_from_get_instance, ILogging))
         except Exception as e:
@@ -25,12 +25,12 @@ class test_get_instance(unittest.TestCase):
     def test_should_get_instance_from_loaded_predefined_dependency(self):
         try:
             factory: IObjectFactory = ObjectFactory()
-            factory.LoadDependencies(FILE_PATH + '/dependencies.json')
+            factory.load_dependencies(FILE_PATH + '/dependencies.json')
 
-            repo_from_get_instance: ILogging = factory.GetInstance('test', ILogging)
+            repo_from_get_instance: ILogging = factory.get_instance('test', ILogging)
             self.assertTrue(isinstance(repo_from_get_instance, ILogging))
 
-            repo_from_get_instance.Log('Hello World!')
+            repo_from_get_instance.log('Hello World!')
         except Exception as e:
             self.assertTrue(False, str(e))
 
@@ -39,8 +39,8 @@ class test_get_instance(unittest.TestCase):
             factory: IObjectFactory = ObjectFactory()
             log_class: ILogging = type('log_class', (ILogging,), {})
 
-            factory.AddDependency('test_should_add_dependency_with_sucess', ILogging, log_class)
-            repo_from_get_instance = factory.GetInstance('test', ILogging)
+            factory.add_dependency('test_should_add_dependency_with_sucess', ILogging, log_class)
+            repo_from_get_instance = factory.get_instance('test', ILogging)
 
             self.assertTrue(repo_from_get_instance is None)
         except Exception as e:
