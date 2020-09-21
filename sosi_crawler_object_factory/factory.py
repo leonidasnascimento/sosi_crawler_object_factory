@@ -27,7 +27,7 @@ class ObjectFactory(IObjectFactory):
 
         self.dependecies = []
 
-    def AddDependency(self, target_crawler: str, interface: Generic[InterfaceType], concrete_class: Generic[ConcreteClassType]):
+    def add_dependency(self, target_crawler: str, interface: Generic[InterfaceType], concrete_class: Generic[ConcreteClassType]):
         """
         Add a generic type accoding to a given interface & crawler alias
 
@@ -54,7 +54,7 @@ class ObjectFactory(IObjectFactory):
         dep: Dependency = Dependency(interface, target_crawler, concrete_class)
         self.dependecies.append(dep)
 
-    def LoadDependencies(self, file_path: str):
+    def load_dependencies(self, file_path: str):
         """
         Load the dependencies that were predefined for SoSI's crawlers
 
@@ -84,9 +84,9 @@ class ObjectFactory(IObjectFactory):
                 implementation = self.__import(dep['implementation'])
                 crawler = dep['crawler']
 
-                self.AddDependency(crawler, interface, implementation)
+                self.add_dependency(crawler, interface, implementation)
 
-    def GetInstance(self, target_crawler: str, interface: Generic[InterfaceType]) -> InterfaceType:
+    def get_instance(self, target_crawler: str, interface: Generic[InterfaceType]) -> InterfaceType:
         """
         Create an instance of a generic type accoding to a given interface & crawler alias
 
